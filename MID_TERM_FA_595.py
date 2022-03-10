@@ -45,6 +45,24 @@ st.markdown(
     {sentiment}
     """
 )
+st.text('THIRD SERVICE')
+st.text('Insert two words to see at the similarity')
+text_input2 = st.text_input('Enter  word','')
+text_input3 = st.text_input('Enter a word','')
+
+import spacy
+spacy.load('en_core_web_sm')
+token1 = nlp(text_input2)
+token1.vector
+token2 = nlp(text_input3)
+token2.vector
+similarity = token1.similarity(token2)
+st.markdown(
+    f"""
+    {similarity}
+    """
+)
+
 
 #streamlit run MID_TERM_FA_595    on the terminal
 #Local URL: http://localhost:8501
