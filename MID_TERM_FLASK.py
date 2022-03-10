@@ -10,7 +10,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from textblob import TextBlob
 import nltk
 nltk.download('punkt')
-
+nltk.download('brown')
 
 
 #1
@@ -29,14 +29,10 @@ def Sentiment_Analizer(string):
 #Translation of the string
 
 def translate(string):
-    translation = []
     blob = TextBlob(string)
     blob.sentences
-    if blob.detect_language() == 'en':
-        translate = blob.translate(from_lang='en', to='it')
-        translation.append(translate)
-    df = pd.DataFrame(translation)
-    return df.to_dict()
+    translate = str(blob.translate(to='it'))
+    return translate
 
 #3
 #From singular to plural and viceversa
@@ -47,9 +43,9 @@ def sing_plur(string):
     blob = TextBlob(string)
     for words in range(1,len(blob.words)):
         sing = blob.words[words].singularize()
-        plur = blob.words[words].singularize()
-    changed_to_singular.append(sing)
-    changed_to_plural.append(plur)
+        plur = blob.words[words].pluralize()
+        changed_to_singular.append(sing)
+        changed_to_plural.append(plur)
     return changed_to_plural
     return changed_to_singular
 
@@ -57,7 +53,31 @@ def sing_plur(string):
 #Tokenize and identify which part of speech is
 
 def POS(string):
+    tag = []
     token = nltk.word_tokenize(string)
+    tags = nltk.pos_tag(token)
+    tag.append(tags)
+    return tag
+
+#5
+#Similarity of the words
+
+
+#6
+#Count repeated words
+
+def repeated(string):
+    blob = TextBlob(string)
+    blob.tokens
+    counts = []
+    report = []
+    for element in blob.tokens:
+        count = blob.tokens.count(element)
+        report =
+    return report
+
+
+
 
 
 
