@@ -1,4 +1,0 @@
-'''
-MID-TERM EXAM
-FA 595
-'''
