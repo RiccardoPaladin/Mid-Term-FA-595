@@ -22,7 +22,12 @@ def Sentiment_Analizer(string):
     scores = sia.polarity_scores(string)
     sentiments.append(scores)
     df = pd.DataFrame(sentiments)
-    return df.to_dict()
+    for i in df.iloc[0:,-1]:
+        if i >= 0.5:
+            print('Positive sentiment ')
+        if i < 0.5:
+            print('Negative sentiment')
+    return df
 
 
 #2
@@ -30,7 +35,6 @@ def Sentiment_Analizer(string):
 
 def translate(string):
     blob = TextBlob(string)
-    blob.sentences
     translate = str(blob.translate(to='it'))
     return translate
 
@@ -49,6 +53,7 @@ def sing_plur(string):
     return changed_to_plural
     return changed_to_singular
 
+
 #4
 #Tokenize and identify which part of speech is
 
@@ -60,7 +65,17 @@ def POS(string):
     return tag
 
 #5
-#Similarity of the words
+#Subjectivity from textblob
+
+def subjectivity(string):
+        blob = TextBlob(string)
+        sub = blob.sentiment[1]
+        if sub >=0.5:
+            print('Subjective string')
+        else:
+            print('Objective string')
+        return f'Subjectivity rate: {sub}'
+
 
 
 #6
@@ -72,13 +87,54 @@ def repeated(string):
     counts = []
     report = []
     for element in blob.tokens:
-        count = blob.tokens.count(element)
-        report =
+        counts = blob.tokens.count(element)
+        report
     return report
 
+#7
+#find the position of the word
+
+def find_word(string, word):
+    blob = TextBlob(string)
+    position = blob.find(word)
+    return position
 
 
 
+@app.route('/input_string', services=['POST'])
+def input_string():
+    post_json = flask.request.json
+    string = post_json.get('string', None)
+    if string:
+        services = post_json.get('services', None)
+        if services:
+            res_dict = {}
+            if 'sentiment' in services:
+                res_dict['sentiment'] = Sentiment_Analizer(string)
+            if 'translate' in services:
+                res_dict['translate'] = translate(string)
+            if 'Part of Speech' in services:
+                res_dict['Part of Speech'] = POS(string)
+            if 'subjectivity' in services:
+                res_dict['subjectivity'] = subjectivity(string)
+            if 'pluralize' in services:
+                res_dict['pluralize'] = pluralize(string)
+            if 'singularize' in services:
+                res_dict['singularize'] = singularize(string)
+            if 'sentences' in services:
+                res_dict['sentences'] = sentences(string)
+
+            return {"success": True, 'response': res_dict}
+        else:
+            return {'success': False, 'error': 'No string passed in json payload'}, 400
+    else:
+        return {'success': False, 'error': 'No string passed in json payload'}, 400
+
+
+
+
+
+#blob.find() look at the position of the word
 
 
 
