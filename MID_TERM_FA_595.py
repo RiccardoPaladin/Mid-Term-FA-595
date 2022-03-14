@@ -73,9 +73,22 @@ st.markdown(
 )
 
 st.text('5TH SERVICE')
+st.text('Insert a singular word and obtain the plural')
+text_input4 = st.text_input('Enter singular word','')
+from textblob import TextBlob
+blob1 = TextBlob(text_input4)
+sing = blob1.words[0].pluralize()
+
+st.markdown(
+    f"""
+    {sing}
+    """
+)
+
+st.text('6TH SERVICE')
+st.text('Insert a string and count the words')
 
 
-#streamlit run MID_TERM_FA_595    on the terminal
-#Local URL: http://localhost:8501
-#Network URL: http://192.168.12.117:8501
+#streamlit run MID_TERM_FA_595.py    on the terminal
+
 
