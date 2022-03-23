@@ -4,6 +4,7 @@ FA 595
 '''
 
 import flask
+from flask import Flask
 import pandas as pd
 import numpy as np
 import nltk
@@ -14,7 +15,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 nltk.download('punkt')
 nltk.download('brown')
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
 #1  OK
 #Sentiment Analysis with SentimentIntensityAnalyzer
@@ -134,6 +135,7 @@ def input_string():
 
 
 if __name__ == "__main__":
+    input_string()
     app.run(host='0.0.0.0', port=8080)
 
 #export FLASK_APP=MID_TERM_FLASK.py
