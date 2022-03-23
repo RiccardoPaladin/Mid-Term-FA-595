@@ -3,17 +3,19 @@ MID-TERM EXAM
 FA 595
 '''
 
+import flask
 import pandas as pd
 import numpy as np
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from textblob import TextBlob
-import nltk
+from textblob import Word
 nltk.download('punkt')
 nltk.download('brown')
 
+app = flask.Flask(__name__)
 
-#1
+#1  OK
 #Sentiment Analysis with SentimentIntensityAnalyzer
 
 def Sentiment_Analizer(string):
@@ -25,8 +27,10 @@ def Sentiment_Analizer(string):
     for i in df.iloc[0:,-1]:
         if i >= 0.5:
             print('Positive sentiment ')
-        if i < 0.5:
+        if (i < 0.5 and i !=0):
             print('Negative sentiment')
+        if 0 == 0:
+            print('Not classified')
     return df
 
 
@@ -38,23 +42,27 @@ def translate(string):
     translate = str(blob.translate(to='it'))
     return translate
 
-#3
+#3 OK
 #From singular to plural and viceversa
 
-def sing_plur(string):
-    changed_to_plural = []
-    changed_to_singular = []
+def pluralize_sungularize_nouns(string):
+    plurals = []
+    singulars = []
     blob = TextBlob(string)
-    for words in range(1,len(blob.words)):
-        sing = blob.words[words].singularize()
-        plur = blob.words[words].pluralize()
-        changed_to_singular.append(sing)
-        changed_to_plural.append(plur)
-    return changed_to_plural
-    return changed_to_singular
+    sentence = blob.sentences[0]
+    results = pd.DataFrame(blob.sentences[0].tags)
+    results.columns = ['words', 'pos']
+    sing = [results.loc[results['pos'] == 'NN', 'words'].iloc[0]]
+    plur = [results.loc[results['pos'] == 'NNS', 'words'].iloc[0]]
+    for word in sing:
+        plural = word.pluralize()
+        plurals.append(plural)
+    for elem in plur:
+        singular = elem.singularize()
+        singulars.append(singular)
+    return f'From singular to plural: {plurals}' , f'From plural to singular: {singulars}'
 
-
-#4
+#4 OK
 #Tokenize and identify which part of speech is
 
 def POS(string):
@@ -64,7 +72,7 @@ def POS(string):
     tag.append(tags)
     return tag
 
-#5
+#5 OK
 #Subjectivity from textblob
 
 def subjectivity(string):
@@ -91,13 +99,10 @@ def repeated(string):
         report
     return report
 
-#7
-#find the position of the word
+#7 definitions
 
-def find_word(string, word):
-    blob = TextBlob(string)
-    position = blob.find(word)
-    return position
+
+
 
 
 
@@ -110,17 +115,15 @@ def input_string():
         if services:
             res_dict = {}
             if 'sentiment' in services:
-                res_dict['sentiment'] = Sentiment_Analizer(string)
+                res_dict['sentiment'] = Sentiment_Analizer(string) #OK
             if 'translate' in services:
                 res_dict['translate'] = translate(string)
             if 'Part of Speech' in services:
-                res_dict['Part of Speech'] = POS(string)
+                res_dict['Part of Speech'] = POS(string)         #OK
             if 'subjectivity' in services:
-                res_dict['subjectivity'] = subjectivity(string)
+                res_dict['subjectivity'] = subjectivity(string)  #OK
             if 'pluralize' in services:
-                res_dict['pluralize'] = pluralize(string)
-            if 'singularize' in services:
-                res_dict['singularize'] = singularize(string)
+                res_dict['pluralize'] = pluralize_sungularize_nouns(string)   #ok
             if 'sentences' in services:
                 res_dict['sentences'] = sentences(string)
 
@@ -129,14 +132,3 @@ def input_string():
             return {'success': False, 'error': 'No string passed in json payload'}, 400
     else:
         return {'success': False, 'error': 'No string passed in json payload'}, 400
-
-
-
-
-
-#blob.find() look at the position of the word
-
-
-
-
-
