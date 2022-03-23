@@ -34,7 +34,7 @@ def Sentiment_Analizer(string):
     return df
 
 
-#2
+#2 OK
 #Translation of the string
 
 def translate(string):
@@ -60,7 +60,8 @@ def pluralize_sungularize_nouns(string):
     for elem in plur:
         singular = elem.singularize()
         singulars.append(singular)
-    return f'From singular to plural: {plurals}' , f'From plural to singular: {singulars}'
+    return f'From singular to plural: {plurals}'
+    return f'From plural to singular: {singulars}'
 
 #4 OK
 #Tokenize and identify which part of speech is
@@ -86,19 +87,20 @@ def subjectivity(string):
 
 
 
-#6
+#6 Named Entity Recognition
 import spacy
 def NER(string):
     ner = []
     nlp = spacy.load("en_core_web_sm")
     analize = nlp(string)
-    named = (X.text, X.label_) for X in analize.ents
+    named = ((X.text, X.label_) for X in analize.ents)
     ner.append(named)
     return ner
 
 
 
 #7 definitions
+
 
 
 
@@ -131,3 +133,7 @@ def input_string():
             return {'success': False, 'error': 'No string passed in json payload'}, 400
     else:
         return {'success': False, 'error': 'No string passed in json payload'}, 400
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=8080)
