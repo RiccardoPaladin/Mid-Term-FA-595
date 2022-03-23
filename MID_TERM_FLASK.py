@@ -87,17 +87,16 @@ def subjectivity(string):
 
 
 #6
-#Count repeated words
+import spacy
+def NER(string):
+    ner = []
+    nlp = spacy.load("en_core_web_sm")
+    analize = nlp(string)
+    named = (X.text, X.label_) for X in analize.ents
+    ner.append(named)
+    return ner
 
-def repeated(string):
-    blob = TextBlob(string)
-    blob.tokens
-    counts = []
-    report = []
-    for element in blob.tokens:
-        counts = blob.tokens.count(element)
-        report
-    return report
+
 
 #7 definitions
 
