@@ -10,6 +10,7 @@ import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from textblob import TextBlob
 from textblob import Word
+from sklearn.feature_extraction.text import TfidfVectorizer
 nltk.download('punkt')
 nltk.download('brown')
 
@@ -87,27 +88,24 @@ def subjectivity(string):
 
 
 
-#6 Named Entity Recognition
-import spacy
-def NER(string):
-    ner = []
-    nlp = spacy.load("en_core_web_sm")
-    analize = nlp(string)
-    named = ((X.text, X.label_) for X in analize.ents)
-    ner.append(named)
-    return ner
+#6 tf_idf
+#term frequency–inverse document frequency it give the importance of the words
 
-
-
-#7 definitions
-
+def tf_idf(string):
+    df_dtm = pd.DataFrame()
+    df = pd.DataFrame({'review': ['review1'], 'text':string})
+    tfidf = TfidfVectorizer(stop_words='english', norm=None)
+    tfidf_matrix = tfidf.fit_transform(df['text'])
+    df_dtm = pd.DataFrame(tfidf_matrix.toarray(),
+                      index=df['review'].values,
+                      columns=tfidf.get_feature_names_out())
+    return df_dtm
 
 
 
 
 
-
-@app.route('/input_string', services=['POST'])
+@app.route('/input_string', methods=['POST'])
 def input_string():
     post_json = flask.request.json
     string = post_json.get('string', None)
@@ -116,17 +114,17 @@ def input_string():
         if services:
             res_dict = {}
             if 'sentiment' in services:
-                res_dict['sentiment'] = Sentiment_Analizer(string) #OK
+                res_dict['sentiment'] = Sentiment_Analizer(string)            #OK
             if 'translate' in services:
                 res_dict['translate'] = translate(string)
             if 'Part of Speech' in services:
-                res_dict['Part of Speech'] = POS(string)         #OK
+                res_dict['Part of Speech'] = POS(string)                      #OK
             if 'subjectivity' in services:
-                res_dict['subjectivity'] = subjectivity(string)  #OK
+                res_dict['subjectivity'] = subjectivity(string)               #OK
             if 'pluralize' in services:
-                res_dict['pluralize'] = pluralize_sungularize_nouns(string)   #ok
-            if 'sentences' in services:
-                res_dict['sentences'] = sentences(string)
+                res_dict['pluralize'] = pluralize_sungularize_nouns(string)   #OK
+            if 'term frequency–inverse document frequency' in services:
+                res_dict['sentences'] = tf_idf(string)                        #OK
 
             return {"success": True, 'response': res_dict}
         else:
@@ -137,3 +135,5 @@ def input_string():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
+
+#export FLASK_APP=MID_TERM_FLASK.py
