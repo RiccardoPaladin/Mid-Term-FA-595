@@ -62,7 +62,8 @@ def pluralize_sungularize_nouns(string):
     for elem in plur:
         singular = elem.singularize()
         singulars.append(singular)
-    return f'From singular to plural: {plurals}', f'From plural to singular: {singulars}'
+    return plurals
+    return singulars
 
 #4 OK
 #Tokenize and identify which part of speech is
