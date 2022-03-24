@@ -119,7 +119,7 @@ def input_string():
             if 'sentiment' in services:
                 res_dict['sentiment'] = Sentiment_Analizer(string)            #OK
             if 'translate' in services:
-                res_dict['translate'] = translate(string)
+                res_dict['translate'] = translate(string)                     #has to be changed
             if 'Part of Speech' in services:
                 res_dict['Part of Speech'] = POS(string)                      #OK
             if 'subjectivity' in services:
