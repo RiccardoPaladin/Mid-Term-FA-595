@@ -139,7 +139,8 @@ def input_string():
             return {'success': False, 'error': 'No string passed in json payload'}, 400
         return jsonify(**request.json)
     else:
-        print('API doc...')
+        a = 'API'
+        return a
 
 
 if __name__ == "__main__":
