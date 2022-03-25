@@ -121,17 +121,17 @@ def input_string():
             if services:
                 res_dict = {}
                 if 'sentiment' in services:
-                res_dict['sentiment'] = Sentiment_Analizer(string)            #OK
+                    res_dict['sentiment'] = Sentiment_Analizer(string)            #OK
                 if 'frequency' in services:
-                res_dict['frequency'] = frequency_words(string)               #OK
+                    res_dict['frequency'] = frequency_words(string)               #OK
                 if 'Part of Speech' in services:
-                res_dict['Part of Speech'] = POS(string)                      #OK
+                    res_dict['Part of Speech'] = POS(string)                      #OK
                 if 'subjectivity' in services:
-                res_dict['subjectivity'] = subjectivity(string)               #OK
+                    res_dict['subjectivity'] = subjectivity(string)               #OK
                 if 'pluralize' in services:
-                res_dict['pluralize'] = pluralize_sungularize_nouns(string)   #OK
+                    res_dict['pluralize'] = pluralize_sungularize_nouns(string)   #OK
                 if 'term frequency–inverse document frequency' in services:
-                res_dict['sentences'] = tf_idf(string)                        #OK
+                    res_dict['sentences'] = tf_idf(string)                        #OK
 
                 return {"success": True, 'response': res_dict}
             else:
