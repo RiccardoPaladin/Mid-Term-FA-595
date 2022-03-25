@@ -5,6 +5,7 @@ FA 595
 
 import flask
 from flask import Flask
+from flask import jsonify
 import pandas as pd
 import numpy as np
 import requests
@@ -112,7 +113,7 @@ def tf_idf(string):
 
 @app.route('/input_string', methods=['GET', 'POST'])
 def input_string():
-    if requests == 'POST':
+    if request.method == 'POST':
         post_json = flask.request.json
         string = post_json.get('string', None)
         if string:
@@ -132,6 +133,7 @@ def input_string():
                 if 'term frequency–inverse document frequency' in services:
                     res_dict['sentences'] = tf_idf(string)                        #OK
 
+                return jsonify(**request.json)
                 return {"success": True, 'response': res_dict}
             else:
                 return {'success': False, 'error': 'No string passed in json payload'}, 400
@@ -142,6 +144,7 @@ def input_string():
 
 
 if __name__ == "__main__":
+    app.debug = True
     app.run(host='0.0.0.0', port=8080)
 
 #export FLASK_APP=MID_TERM_FLASK.py
