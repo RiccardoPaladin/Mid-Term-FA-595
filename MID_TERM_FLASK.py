@@ -112,33 +112,30 @@ def tf_idf(string):
 
 @app.route('/input_string', methods=['POST', 'GET'])
 def input_string():
-    if requests.method == 'GET':
-        print('API documentation...')
-    else :
-        post_json = flask.request.json
-        string = post_json.get('string', None)
-        if string:
-            services = post_json.get('services', None)
-            if services:
-                res_dict = {}
-                if 'sentiment' in services:
-                    res_dict['sentiment'] = Sentiment_Analizer(string)            #OK
-                if 'frequency' in services:
-                    res_dict['frequency'] = frequency_words(string)               #OK
-                if 'Part of Speech' in services:
-                    res_dict['Part of Speech'] = POS(string)                      #OK
-                if 'subjectivity' in services:
-                    res_dict['subjectivity'] = subjectivity(string)               #OK
-                if 'pluralize' in services:
-                    res_dict['pluralize'] = pluralize_sungularize_nouns(string)   #OK
-                if 'term frequency–inverse document frequency' in services:
-                    res_dict['sentences'] = tf_idf(string)                        #OK
+    post_json = flask.request.json
+    string = post_json.get('string', None)
+    if string:
+        services = post_json.get('services', None)
+        if services:
+            res_dict = {}
+            if 'sentiment' in services:
+                res_dict['sentiment'] = Sentiment_Analizer(string)            #OK
+            if 'frequency' in services:
+                res_dict['frequency'] = frequency_words(string)               #OK
+            if 'Part of Speech' in services:
+                res_dict['Part of Speech'] = POS(string)                      #OK
+            if 'subjectivity' in services:
+                res_dict['subjectivity'] = subjectivity(string)               #OK
+            if 'pluralize' in services:
+                res_dict['pluralize'] = pluralize_sungularize_nouns(string)   #OK
+            if 'term frequency–inverse document frequency' in services:
+                res_dict['sentences'] = tf_idf(string)                        #OK
 
-                return {"success": True, 'response': res_dict}
-            else:
-                return {'success': False, 'error': 'No string passed in json payload'}, 400
+            return {"success": True, 'response': res_dict}
         else:
             return {'success': False, 'error': 'No string passed in json payload'}, 400
+    else:
+        return {'success': False, 'error': 'No string passed in json payload'}, 400
 
 
 if __name__ == "__main__":
