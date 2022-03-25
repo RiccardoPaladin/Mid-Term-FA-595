@@ -142,7 +142,6 @@ def input_string():
 
 
 if __name__ == "__main__":
-    app.debug = True
     app.run(host='0.0.0.0', port=8080)
 
 #export FLASK_APP=MID_TERM_FLASK.py
