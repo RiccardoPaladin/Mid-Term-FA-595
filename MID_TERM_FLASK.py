@@ -39,6 +39,7 @@ def Sentiment_Analizer(string):
 
 
 #2 OK
+#count the frequency of the words
 def frequency_words(string):
     frequency = []
     words = word_tokenize(string)
