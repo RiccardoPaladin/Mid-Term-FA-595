@@ -7,6 +7,7 @@ import flask
 from flask import Flask
 import pandas as pd
 import numpy as np
+import requests
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk import word_tokenize
@@ -111,7 +112,7 @@ def tf_idf(string):
 
 @app.route('/input_string', methods=['POST', 'GET'])
 def input_string():
-    if requests.method == 'GET':
+    if requests.methods == 'GET':
         print('API documentation...')
     else :
         post_json = flask.request.json
