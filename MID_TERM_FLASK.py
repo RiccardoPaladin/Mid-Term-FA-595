@@ -137,7 +137,7 @@ def input_string():
                 return {'success': False, 'error': 'No string passed in json payload'}, 400
         else:
             return {'success': False, 'error': 'No string passed in json payload'}, 400
-    else :
+    else:
         print('API doc...')
 
 
