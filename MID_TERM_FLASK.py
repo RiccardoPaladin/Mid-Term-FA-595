@@ -9,6 +9,8 @@ import pandas as pd
 import numpy as np
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from nltk import word_tokenize
+from nltk.probability import FreqDist
 from textblob import TextBlob
 from textblob import Word
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -37,12 +39,13 @@ def Sentiment_Analizer(string):
 
 
 #2 OK
-#Translation of the string
+def frequency_words(string):
+    frequency = []
+    words = word_tokenize(string)
+    fdist = FreqDist(words)
+    frequency.append(fdist)
+    return frequency
 
-def translate(string):
-    blob = TextBlob(string)
-    translate = str(blob.translate(to='it'))
-    return translate
 
 #3 OK
 #From singular to plural and viceversa
@@ -118,8 +121,8 @@ def input_string():
             res_dict = {}
             if 'sentiment' in services:
                 res_dict['sentiment'] = Sentiment_Analizer(string)            #OK
-            if 'translate' in services:
-                res_dict['translate'] = translate(string)                     #has to be changed
+            if 'frequency' in services:
+                res_dict['frequency'] = frequency_words(string)               #OK
             if 'Part of Speech' in services:
                 res_dict['Part of Speech'] = POS(string)                      #OK
             if 'subjectivity' in services:
