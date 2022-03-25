@@ -140,7 +140,8 @@ def input_string():
         return jsonify(**request.json)
     else:
         a = 'API'
-        return flask.request.json
+        return a
+    return res_dict
 
 
 if __name__ == "__main__":
