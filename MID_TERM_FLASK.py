@@ -141,7 +141,6 @@ def input_string():
     else:
         a = 'API'
         return a
-    return res_dict
 
 
 if __name__ == "__main__":
