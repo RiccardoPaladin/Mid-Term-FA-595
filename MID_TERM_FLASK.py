@@ -111,9 +111,9 @@ def tf_idf(string):
 
 
 
-@app.route('/input_string', methods=['GET', 'POST'])
+@app.route('/input_string', method =['GET', 'POST'])
 def input_string():
-    if methods == 'GET':
+    if method == 'POST':
         post_json = flask.request.json
         string = post_json.get('string', None)
         if string:
