@@ -132,12 +132,12 @@ def input_string():
                     res_dict['pluralize'] = pluralize_sungularize_nouns(string)   #OK
                 if 'term frequency–inverse document frequency' in services:
                     res_dict['sentences'] = tf_idf(string)                        #OK
-            return {"success": True, 'response': res_dict}
-        return jsonify(**request.json)
+                return {"success": True, 'response': res_dict}
             else:
                 return {'success': False, 'error': 'No string passed in json payload'}, 400
         else:
             return {'success': False, 'error': 'No string passed in json payload'}, 400
+        return jsonify(**request.json)
     else:
         print('API doc...')
 
